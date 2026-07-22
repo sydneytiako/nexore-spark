@@ -30,7 +30,12 @@ app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('MAIL_DEFAULT_SENDER', 'NEXOR
 
 mail       = Mail(app)
 serializer = URLSafeTimedSerializer(app.secret_key)
-socketio   = SocketIO(app, cors_allowed_origins="*", manage_session=False)
+socketio = SocketIO(
+    app,
+    async_mode="gevent",
+    cors_allowed_origins="*",
+    manage_session=False
+)
 
 # ============ CONNEXION POSTGRESQL (NEON) ============
 DATABASE_URL = os.environ.get('DATABASE_URL', '')
@@ -1177,5 +1182,9 @@ if __name__ == '__main__':
 ║   http://localhost:5000                            ║
 ║   Admin: direction@ift-mada.mg / admin2025         ║
 ╚══════════════════════════════════════════════════════╝""")
-    socketio.run(app, host='0.0.0.0', port=int(os.environ.get('PORT',5000)),
-                 debug=False, allow_unsafe_werkzeug=True)
+socketio.run(
+    app,
+    host="0.0.0.0",
+    port=int(os.environ.get("PORT", 5000)),
+    debug=False
+)
