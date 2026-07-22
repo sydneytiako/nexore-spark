@@ -1173,6 +1173,8 @@ def on_stop_typing(data):
     if 'user_id' in session:
         emit('user_stop_typing', {'user_id':session['user_id']}, room=data.get('room'), include_self=False)
 
+os.makedirs('static/uploads', exist_ok=True)
+init_db()
 if __name__ == '__main__':
     os.makedirs('static/uploads', exist_ok=True)
     init_db()
